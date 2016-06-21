@@ -10,7 +10,8 @@ env:
   - DJANGO_VERSION=1.4.22
 # command to install dependencies
 install:
-  - pip install -r requirements.txt -q Django==$DJANGO_VERSION--use-mirrors
+  - pip install Django==$DJANGO_VERSION
+  - pip install -r requirements.txt
   - python setup.py install
 # command to run tests
 script: "./run_tests.sh"
