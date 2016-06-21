@@ -321,12 +321,25 @@ class DefaultViewAdder(BaseViewAdder):
         return last_import_line
 
     def _add_pattern(self, urls_content):
+        # old style urlpatterns
+        old_style = True
         m = re.match(
             r'.*urlpatterns\s*=\s*patterns\((?P<params>.*)\)',
             urls_content,
             re.DOTALL
         )
-        params = m.group('params').strip()
+        if m is None:
+            # new style urlpatterns
+            old_style = False
+            m = re.match(
+                r'.*urlpatterns\s*=\s*\[(?P<params>.*)\]',
+                urls_content,
+                re.DOTALL
+            )
+        if old_style:
+            params = m.group('params').strip()
+        else:
+            params = m.group('params').rstrip()
         if params[len(params) - 1] != ',':
             params += ','
         params += '\n{indent}'.format(indent=self.indent)
@@ -351,8 +364,15 @@ class DefaultViewAdder(BaseViewAdder):
                 appendix=appendix,
             )
 
+        # determine substitution based on old style or new style urlpatterns
+        if old_style:
+            pattern_to_sub = r'(.*urlpatterns\s*=\s*patterns\()(.*)(\))'
+
+        else:
+            pattern_to_sub = r'(.*urlpatterns\s*=\s*\[)(.*)(\])'
+
         return re.sub(
-            r'(.*urlpatterns\s*=\s*patterns\()(.*)(\))',
+            pattern_to_sub,
             r'\1{0}\3'.format(params),
             urls_content,
             flags=re.DOTALL

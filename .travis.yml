@@ -5,9 +5,12 @@ python:
   - "3.3"
   - "3.4"
   - "3.5"
+env:
+  - DJANGO_VERSION=1.9.7
+  - DJANGO_VERSION=1.4.22
 # command to install dependencies
 install:
-  - pip install -r requirements.txt --use-mirrors
+  - pip install -r requirements.txt -q Django==$DJANGO_VERSION--use-mirrors
   - python setup.py install
 # command to run tests
 script: "./run_tests.sh"

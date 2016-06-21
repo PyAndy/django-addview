@@ -320,6 +320,30 @@ class TestCodeGeneration(unittest.TestCase):
 )'''
         )
 
+    def test_add_pattern_function_view_new_style(self):
+        txt = '''urlpatterns = [
+    url(r'^$', MainView.as_view(), name=MainView.url_name),
+    url(r'^m/(?P<page>\d+)/$' , MainView.as_view(), name=MainView.url_name),
+    url(r'^poczekalnia/$', PendingView.as_view(), name=PendingView.url_name),
+]'''
+        adder = DefaultViewAdder(
+            'test_app',
+            'function_view',
+            params={
+                'function_name': 'test_view',
+                'url_name': "'urlik'",
+                'url_pattern': "r'^m/(?P<page>\d+)/$'"
+            })
+        self.assertEqual(
+            adder._add_pattern(txt),
+            '''urlpatterns = [
+    url(r'^$', MainView.as_view(), name=MainView.url_name),
+    url(r'^m/(?P<page>\d+)/$' , MainView.as_view(), name=MainView.url_name),
+    url(r'^poczekalnia/$', PendingView.as_view(), name=PendingView.url_name),
+    url(r'^m/(?P<page>\d+)/$', test_view, name='urlik'),
+]'''
+            )
+
     def test_find_patterns(self):
         txt = '''urlpatterns = patterns('',
     url(r'^$', MainView.as_view(), name=MainView.url_name),
@@ -359,4 +383,45 @@ class TestCodeGeneration(unittest.TestCase):
 url(r'^$', MainView.as_view(), name=MainView.url_name),
     url(r'^m/(?P<page>\d+)/$', TestView.as_view(), name='urlik'),
 )'''
+        )
+
+    def test_find_patterns_new_style(self):
+        txt = '''urlpatterns = [
+    url(r'^$', MainView.as_view(), name=MainView.url_name),
+    url(r'^m/(?P<page>\d+)/$' , MainView.as_view(), name=MainView.url_name),
+    url(r'^poczekalnia/$', PendingView.as_view(), name=PendingView.url_name),
+]'''
+        self.assertEqual(
+            self.adder._add_pattern(txt),
+                '''urlpatterns = [
+    url(r'^$', MainView.as_view(), name=MainView.url_name),
+    url(r'^m/(?P<page>\d+)/$' , MainView.as_view(), name=MainView.url_name),
+    url(r'^poczekalnia/$', PendingView.as_view(), name=PendingView.url_name),
+    url(r'^m/(?P<page>\d+)/$', TestView.as_view(), name='urlik'),
+]'''
+        )
+
+        #Same as above but params without trailing comma
+        txt = txt[:-3] + txt[-2:]
+
+        self.assertEqual(
+            self.adder._add_pattern(txt),
+                '''urlpatterns = [
+    url(r'^$', MainView.as_view(), name=MainView.url_name),
+    url(r'^m/(?P<page>\d+)/$' , MainView.as_view(), name=MainView.url_name),
+    url(r'^poczekalnia/$', PendingView.as_view(), name=PendingView.url_name),
+    url(r'^m/(?P<page>\d+)/$', TestView.as_view(), name='urlik'),
+]'''
+        )
+
+        #One liner
+        txt2 = ('''urlpatterns = ['''
+                '''url(r'^$', MainView.as_view(), name=MainView.url_name),]''')
+
+        self.assertEqual(
+            self.adder._add_pattern(txt2),
+            '''urlpatterns = [\
+url(r'^$', MainView.as_view(), name=MainView.url_name),
+    url(r'^m/(?P<page>\d+)/$', TestView.as_view(), name='urlik'),
+]'''
         )
