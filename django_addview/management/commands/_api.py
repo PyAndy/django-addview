@@ -76,7 +76,7 @@ class Api(object):
             global_template_dir
         )
         ret = []
-        for i in xrange(3):
+        for i in range(3):
             ret += sorted(local_templates[i] + global_templates[i])
         return ret
 

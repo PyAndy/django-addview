@@ -100,7 +100,7 @@ class DefaultViewAdder(BaseViewAdder):
         )
 
         at_least_one_line = False
-        for param_name, param_value in sorted(self.params.iteritems()):
+        for param_name, param_value in sorted(self.params.items()):
             if param_name in RESERVED_PARAMS or param_value == '':
                 continue
             at_least_one_line = True

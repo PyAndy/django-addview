@@ -3,7 +3,12 @@ import sys
 import django
 from django.conf import settings
 import logging
-from StringIO import StringIO
+try:
+    # Python2
+    from StringIO import StringIO
+except ImportError:
+    # Python3
+    from io import StringIO
 tmp_logs = StringIO()
 
 logger = logging.getLogger('addview')
