@@ -41,5 +41,6 @@ setup(name='django-addview',
                    'License :: OSI Approved :: BSD License',
                    'Intended Audience :: Developers',
                    'Environment :: Console :: Curses',
-                   'Programming Language :: Python :: 2.7'],
+                   'Programming Language :: Python :: 2.7',
+                   'Programming Language :: Python :: 3'],
       zip_safe=False)
