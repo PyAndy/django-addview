@@ -4,9 +4,15 @@ python:
   - "3.4"
   - "3.5"
 env:
+  - DJANGO_VERSION=1.4.22
   - DJANGO_VERSION=1.9.7
-  - DJANGO_VERSION=1.8.13
   - DJANGO_VERSION=1.10a1
+matrix:
+	exclude:
+	- python: "3.4"
+		env: DJANGO_VERSION=1.4.22
+	- python: "3.5"
+		env: DJANGO_VERSION=1.4.22
 # command to install dependencies
 install:
   - pip install Django~=$DJANGO_VERSION
