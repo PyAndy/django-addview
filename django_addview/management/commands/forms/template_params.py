@@ -23,7 +23,7 @@ class TemplateForm(npyscreen.Form):
         self.template_creation = self.add(
             npyscreen.TitleSelectOne,
             scroll_exit=True,
-            max_height=7,
+            max_height=8,
             name='Create template from:',
             values=self._tpl_creation_choices,
             value=0
@@ -32,7 +32,7 @@ class TemplateForm(npyscreen.Form):
         self.template_dir_choice = self.add(
             npyscreen.TitleSelectOne,
             scroll_exit=True,
-            max_height=2,
+            max_height=3,
             name='Directory to save template:',
             values=['Global for project', 'Local for app'],
             value=0,

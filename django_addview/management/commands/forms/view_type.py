@@ -24,7 +24,7 @@ class ViewTypeForm(npyscreen.Form):
         self.view_type = self.add(
             npyscreen.TitleSelectOne,
             scroll_exit=True,
-            max_height=14,
+            max_height=15,
             value=0,
             name='View Type',
             values=self.choices

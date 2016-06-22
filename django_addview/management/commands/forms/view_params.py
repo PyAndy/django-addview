@@ -20,7 +20,7 @@ class ViewForm(npyscreen.Form):
             show_order=1000
         )
         self._create()
-        for priority, _args, _kwargs in sorted(self._widgets):
+        for priority, _args, _kwargs in sorted(self._widgets, key=lambda x: x[0]):
             attr_name = _kwargs.pop('attr_name')
             setattr(self, attr_name, self.add(*_args, **_kwargs))
 
@@ -57,7 +57,7 @@ class SingleObjectMixin(object):
             attr_name='model',
             values=['Leave empty'] + API.get_model_names(),
             value=0,
-            max_height=5,
+            max_height=6,
             name='model',
             scroll_exit=True,
             show_order=100,
@@ -117,7 +117,7 @@ class MultipleObjectMixin(object):
             name='allow_empty',
             values=['True', 'False'],
             value=0,
-            max_height=2,
+            max_height=3,
             scroll_exit=True,
             show_order=1,
             begin_entry_at=self.BEGIN_ENTRY
@@ -127,7 +127,7 @@ class MultipleObjectMixin(object):
             attr_name='model',
             values=['Leave empty'] + API.get_model_names(),
             value=0,
-            max_height=5,
+            max_height=6,
             name='model',
             scroll_exit=True,
             show_order=100,

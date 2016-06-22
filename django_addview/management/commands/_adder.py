@@ -367,7 +367,6 @@ class DefaultViewAdder(BaseViewAdder):
         # determine substitution based on old style or new style urlpatterns
         if old_style:
             pattern_to_sub = r'(.*urlpatterns\s*=\s*patterns\()(.*)(\))'
-
         else:
             pattern_to_sub = r'(.*urlpatterns\s*=\s*\[)(.*)(\])'
 

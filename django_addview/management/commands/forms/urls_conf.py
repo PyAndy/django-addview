@@ -7,7 +7,7 @@ class UrlsForm(npyscreen.Form):
         self.urls_to_edit = self.add(
             npyscreen.TitleSelectOne,
             scroll_exit=True,
-            max_height=3,
+            max_height=4,
             value=0,
             name='urls.conf to edit',
             values=['Project global', 'Local for app', 'Don\'t edit']
