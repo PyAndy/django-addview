@@ -1,13 +1,19 @@
+import curses
+
 import django.test as unittest
 import shutil
 import os
 import re
+
+import npyscreen
+
+from django_addview.management.commands.addview import MyApplication
+from npyscreen.wgwidget import ExhaustedTestInput
 from ._adder import DefaultViewAdder
-from ._api import Api
+from ._api import Api, API
 from ._utils import app_path
 from ._utils import camel2under
 from ._config_loader import config
-from pprint import pprint
 
 
 class TestTemplateDirCreation(unittest.TestCase):
@@ -425,3 +431,52 @@ url(r'^$', MainView.as_view(), name=MainView.url_name),
     url(r'^m/(?P<page>\d+)/$', TestView.as_view(), name='urlik'),
 ]'''
         )
+
+KEY_ENTER = ord('\n')
+KEY_TAB = ord('\t')
+
+
+class TestFormCreation(unittest.TestCase):
+    """
+    creates template file
+    adds view to view.py
+    adds route to urls.py
+    """
+    def setUp(self):
+        API.set_app_name('test_app')
+
+    #     os.rename(
+    #         config['global_template_dir'],
+    #         os.path.join(
+    #             os.path.dirname(config['global_template_dir']),
+    #             'template_bac'
+    #         )
+    #     )
+    #
+    # def tearDown(self):
+    #     if os.path.isdir(config['global_template_dir']):
+    #         shutil.rmtree(config['global_template_dir'])
+    #     os.rename(
+    #         os.path.join(
+    #             os.path.dirname(config['global_template_dir']),
+    #             'template_bac'
+    #         ),
+    #         config['global_template_dir']
+    #     )
+
+    def _gui(self, *args):
+        try:
+            self.app = MyApplication().run(fork=False)
+        except ExhaustedTestInput:
+            pass
+
+    def test_creating_forms(self):
+        npyscreen.TEST_SETTINGS['TEST_INPUT'] = []
+        npyscreen.add_test_input_from_iterable([KEY_TAB, KEY_ENTER])
+        # npyscreen.add_test_input_from_iterable(['MyView', KEY_TAB, KEY_ENTER])
+        # npyscreen.add_test_input_from_iterable([KEY_TAB, KEY_TAB, KEY_TAB, KEY_ENTER])
+        # npyscreen.add_test_input_from_iterable([KEY_TAB, KEY_TAB, KEY_TAB, KEY_ENTER])
+        # npyscreen.add_test_input_from_iterable([KEY_TAB, KEY_TAB, KEY_TAB, KEY_ENTER])
+        npyscreen.TEST_SETTINGS['CONTINUE_AFTER_TEST_INPUT'] = False
+
+        npyscreen.wrapper_basic(self._gui)
