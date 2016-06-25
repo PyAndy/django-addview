@@ -1,3 +1,2 @@
 Django>=1.4.0
-django-nose>=1.4.3,<1.5
-npyscreen>=4.10.5,<4.11.0
+npyscreen==4.10.5

@@ -17,6 +17,7 @@ matrix:
 install:
   - pip install Django~=$DJANGO_VERSION
   - pip install -r requirements.txt
+  - pip install -r dev_requirements.txt
   - python setup.py install
 # command to run tests
 script: "./run_tests.sh"
