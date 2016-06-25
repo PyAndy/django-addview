@@ -1,12 +1,12 @@
 # Add views to Django app automatically - django-addview
 [![Build Status](https://travis-ci.org/yakxxx/django-addview.png)](https://travis-ci.org/yakxxx/django-addview)
-## What it does?
+## What does it do?
 
 Can't remember Class-Based-Views parameters?
 Are you tired of reiterating the same mundane steps while adding a new view?
 Try __django-addview__.
 
-## How it works?
+## How does it work?
 
 Django-addview provides you with a simple ncurses based gui to add new class-based or functional view.
 
@@ -15,6 +15,11 @@ Django-addview provides you with a simple ncurses based gui to add new class-bas
 * Creates template (empty, or copied from existing one)
 * Adds entry to __urls.py__
 * Cares about all imports
+
+## Requirements
+
+* Django >= 1.4 (Tested with 1.4, 1.9, 1.10)
+* Python 2.7 or 3 (Tested with 2.7, 3.5)
 
 ## Installation
 
@@ -33,7 +38,7 @@ INSTALLED_APPS = (
 
 `./manage.py addview app_name`
 
-__Remember:__ What you type inside app is what you get inside your code, so if you want to have a string you have to quote it.
+__Remember:__ What you type inside the app is what you will get inside your code, so if you want to have a string you have to quote it.
 For example:
 
 ```
@@ -43,10 +48,10 @@ template_name       "test_app/my_view.html"
 ## Configuration
 Django-addview expects only one config variable. It's : `ADDVIEW_GLOBAL_TEMPLATE_DIR = ...`
 which points to directory where you keep your project templates 
-(It's good practice to keep templates inside one directory per project unless you write reusable app).
+(It's good practice to keep templates inside one directory per project unless you write reusable apps).
 
 Django-addview can create your views in two locations. One is `ADDVIEW_GLOBAL_TEMPLATE_DIR` and second is `templates`
-directory inside your apps directory. You choose between them while adding view in gui.
+directory inside your apps directory. You choose between them while adding the view in the gui.
 
 Example of configuration:
 
