@@ -1,1 +1,1 @@
-from management.commands.tests import *
+from django_addview.management.commands.tests import *
