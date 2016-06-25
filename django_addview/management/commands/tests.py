@@ -1,19 +1,13 @@
-import curses
-
 import django.test as unittest
 import shutil
 import os
 import re
-
-import npyscreen
-
-from django_addview.management.commands.addview import MyApplication
-from npyscreen.wgwidget import ExhaustedTestInput
 from ._adder import DefaultViewAdder
-from ._api import Api, API
+from ._api import Api
 from ._utils import app_path
 from ._utils import camel2under
 from ._config_loader import config
+from pprint import pprint
 
 
 class TestTemplateDirCreation(unittest.TestCase):
