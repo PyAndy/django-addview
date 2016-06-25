@@ -1,1 +1,1 @@
-# from management.commands.tests import *
+from management.commands.tests import *
